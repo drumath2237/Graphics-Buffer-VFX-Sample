@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 154809165}
   - component: {fileID: 154809164}
   - component: {fileID: 154809163}
+  - component: {fileID: 154809166}
   m_Layer: 0
   m_Name: BufferedSinCurve
   m_TagString: Untagged
@@ -233,6 +234,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &154809166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 154809162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1dd281b26b50f14082d2290b4f08e2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _effect: {fileID: 154809164}
 --- !u!1 &979426115
 GameObject:
   m_ObjectHideFlags: 0
