@@ -12,9 +12,12 @@ namespace VisualEffectBuffer
     {
         private Device _kinect;
         private bool _isRunning = false;
-        
+
         private GraphicsBuffer colorBuffer = null;
         private GraphicsBuffer positionBuffer = null;
+
+        private Color[] colorArray = null;
+        private Vector3[] positionArray = null;
 
         private Transformation _kinectTransformation = null;
 
@@ -41,7 +44,7 @@ namespace VisualEffectBuffer
             var depthCalibration = _kinect.GetCalibration().DepthCameraCalibration;
             var width = depthCalibration.ResolutionWidth;
             var height = depthCalibration.ResolutionHeight;
-            
+
             colorBuffer = new GraphicsBuffer(GraphicsBuffer.Target.Structured, width * height,
                 Marshal.SizeOf(new Color()));
             positionBuffer = new GraphicsBuffer(GraphicsBuffer.Target.Structured, width * height,
@@ -63,21 +66,48 @@ namespace VisualEffectBuffer
                 using var capture = _kinect.GetCapture();
 
                 using Image colorImage = _kinectTransformation.ColorImageToDepthCamera(capture);
-                var colorArray = colorImage.GetPixels<BGRA>().ToArray()
+                colorArray = colorImage.GetPixels<BGRA>().ToArray()
                     .Select(bgra => new Color(bgra.R, bgra.G, bgra.B, bgra.A)).ToArray();
-                colorBuffer.SetData(colorArray);
 
                 using Image positionImage = _kinectTransformation.DepthImageToPointCloud(capture.Depth);
-                var positionArray = positionImage.GetPixels<Short3>().ToArray()
+                positionArray = positionImage.GetPixels<Short3>().ToArray()
                     .Select(short3 => new Vector3(short3.X / 1000.0f, short3.Y / 1000.0f, short3.Z / 1000.0f))
                     .ToArray();
+            }
+        }
+
+        private void Update()
+        {
+            if (colorArray != null && colorArray.Length != 0)
+            {
+                colorBuffer.SetData(colorArray);
+            }
+
+            if (positionArray != null && positionArray.Length != 0)
+            {
                 positionBuffer.SetData(positionArray);
             }
+            
+            _effect.SetGraphicsBuffer(_propertyColorBuffer, colorBuffer);
+            _effect.SetGraphicsBuffer(_propertyPositionBuffer, positionBuffer);
+
         }
 
         private void OnApplicationQuit()
         {
             _isRunning = false;
+
+            if (colorBuffer != null)
+            {
+                colorBuffer.Dispose();
+                colorBuffer = null;
+            }
+
+            if (positionBuffer != null)
+            {
+                positionBuffer.Dispose();
+                positionBuffer = null;
+            }
 
             if (_kinectTransformation != null)
             {
