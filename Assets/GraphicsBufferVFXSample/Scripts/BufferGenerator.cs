@@ -11,9 +11,9 @@ namespace GraphicsBufferVFXSample
 
         private GraphicsBuffer _buffer;
 
-        private int bufferCount = 20;
+        private const int bufferCount = 20;
 
-        private float[] bufferArray = new float[20];
+        private Vector3[] positionArray = new Vector3[bufferCount];
 
         private readonly int bufferProperty = Shader.PropertyToID("buffer");
 
@@ -23,7 +23,7 @@ namespace GraphicsBufferVFXSample
 
         private void Start()
         {
-            _buffer = new GraphicsBuffer(GraphicsBuffer.Target.Raw, bufferCount, sizeof(float));
+            _buffer = new GraphicsBuffer(GraphicsBuffer.Target.Structured, bufferCount, Marshal.SizeOf(new Vector3()));
 
             if (_effect != null)
             {
@@ -36,11 +36,11 @@ namespace GraphicsBufferVFXSample
         {
             for (var i = 0; i < bufferCount; i++)
             {
-                bufferArray[i] = Mathf.Sin(sinIndex + i * 0.5f);
+                positionArray[i] = new Vector3(i * 0.1f, Mathf.Sin(sinIndex + i * 0.5f), 0);
             }
 
             sinIndex += 0.05f;
-            _buffer.SetData(bufferArray);
+            _buffer.SetData(positionArray);
         }
     }
 }
