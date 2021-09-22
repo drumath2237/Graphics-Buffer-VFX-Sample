@@ -21,7 +21,6 @@ namespace VisualEffectBuffer
 
         private Transformation _kinectTransformation = null;
 
-        private readonly int _propertyBufferCount = Shader.PropertyToID("bufferCount");
         private readonly int _propertyColorBuffer = Shader.PropertyToID("colorBuffer");
         private readonly int _propertyPositionBuffer = Shader.PropertyToID("positionBuffer");
 
@@ -45,13 +44,18 @@ namespace VisualEffectBuffer
             var width = depthCalibration.ResolutionWidth;
             var height = depthCalibration.ResolutionHeight;
 
-            colorBuffer = new GraphicsBuffer(GraphicsBuffer.Target.Structured, width * height,
-                Marshal.SizeOf(new Color()));
+            colorBuffer = new GraphicsBuffer(
+                GraphicsBuffer.Target.Structured,
+                width * height,
+                Marshal.SizeOf(new Color())
+            );
             positionBuffer = new GraphicsBuffer(GraphicsBuffer.Target.Structured, width * height,
                 Marshal.SizeOf(new Vector3()));
 
-            _effect.SetInt(_propertyBufferCount, width * height);
-            _effect.SetGraphicsBuffer(_propertyColorBuffer, colorBuffer);
+            _effect.SetGraphicsBuffer(
+                _propertyColorBuffer,
+                colorBuffer
+            );
             _effect.SetGraphicsBuffer(_propertyPositionBuffer, positionBuffer);
 
             _kinectTransformation = _kinect.GetCalibration().CreateTransformation();
@@ -87,10 +91,6 @@ namespace VisualEffectBuffer
             {
                 positionBuffer.SetData(positionArray);
             }
-            
-            _effect.SetGraphicsBuffer(_propertyColorBuffer, colorBuffer);
-            _effect.SetGraphicsBuffer(_propertyPositionBuffer, positionBuffer);
-
         }
 
         private void OnApplicationQuit()
