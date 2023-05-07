@@ -2790,7 +2790,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 300000
+      m_SerializableObject: 1000000
     m_Space: 2147483647
   m_Property:
     name: Rate
@@ -6995,7 +6995,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"x":4.541205406188965,"y":4.541205406188965,"z":4.541205406188965}'
+      m_SerializableObject: '{"x":10.432950973510743,"y":10.432950973510743,"z":10.432950973510743}'
     m_Space: 2147483647
   m_Property:
     name: Color
@@ -7948,7 +7948,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"x":1.5,"y":1.5,"z":2.0}'
+      m_SerializableObject: '{"x":1.2400000095367432,"y":1.25,"z":1.7799999713897706}'
     m_Space: 2147483647
   m_Property:
     name: B
